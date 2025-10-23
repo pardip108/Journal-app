@@ -30,7 +30,7 @@ public class JournalEntryService {
             user.getJournalEntries().add(saved);
 //        user.setUsername(null); // deberately null set kar diye ab user me entry save nahi ho payega
             //because user entity me hum username ko not null rakhe huwe h so
-            userService.saveEntry(user);
+            userService.saveUser(user);
         }catch (Exception e){
             System.out.println(e);
             throw new RuntimeException("an error occured while saving the entry.", e);
@@ -50,11 +50,20 @@ public class JournalEntryService {
     }
 
     public void deleteById(ObjectId id, String username){
-        User user = userService.findByUsername(username);
-        user.getJournalEntries().removeIf(x ->  x.getId().equals(id));
-        userService.saveEntry(user);
-        journalEntryRepository.deleteById(id);
+        try{
+            User user = userService.findByUsername(username);
+            boolean removed = user.getJournalEntries().removeIf(x ->  x.getId().equals(id));
+            if(removed){
+                userService.saveUser(user);
+                journalEntryRepository.deleteById(id);
+            }
+        }catch (Exception e){
+            System.out.println(e);
+            throw new RuntimeException("an error occured while saving the entry.", e);
+        }
     }
+
+
 }
 
 //controller-> service -> repository
