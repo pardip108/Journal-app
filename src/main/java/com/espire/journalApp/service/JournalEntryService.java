@@ -3,6 +3,7 @@ package com.espire.journalApp.service;
 import com.espire.journalApp.entity.JournalEntry;
 import com.espire.journalApp.entity.User;
 import com.espire.journalApp.repository.JournalEntryRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Slf4j
 public class JournalEntryService {
 
     @Autowired
@@ -20,6 +22,7 @@ public class JournalEntryService {
 
     @Autowired
     private UserService userService;
+
 
     @Transactional
     public void saveEntry(JournalEntry journalEntry, String username){
@@ -58,7 +61,7 @@ public class JournalEntryService {
                 journalEntryRepository.deleteById(id);
             }
         }catch (Exception e){
-            System.out.println(e);
+            log.info("exception", e);
             throw new RuntimeException("an error occured while saving the entry.", e);
         }
     }

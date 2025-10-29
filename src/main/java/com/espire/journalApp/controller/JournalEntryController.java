@@ -5,6 +5,8 @@ import com.espire.journalApp.entity.User;
 import com.espire.journalApp.service.JournalEntryService;
 import com.espire.journalApp.service.UserService;
 import org.bson.types.ObjectId;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,8 @@ public class JournalEntryController {
 
     @Autowired
     private UserService userService;
+
+    private static final Logger logger = LoggerFactory.getLogger(JournalEntryController.class);
 
     @GetMapping
     public ResponseEntity<?> getAllJournalEntriesOfUser(){
@@ -61,6 +65,7 @@ public class JournalEntryController {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
+            logger.info("hello");
             journalEntryService.saveEntry(myEntry, username);
             return new ResponseEntity<>(myEntry, HttpStatus.CREATED);
         }catch (Exception e){
