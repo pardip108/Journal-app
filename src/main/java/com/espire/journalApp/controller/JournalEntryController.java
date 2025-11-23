@@ -4,6 +4,7 @@ import com.espire.journalApp.entity.JournalEntry;
 import com.espire.journalApp.entity.User;
 import com.espire.journalApp.service.JournalEntryService;
 import com.espire.journalApp.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.bson.types.ObjectId;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/journal")
+@Tag(name = "Journal Entries APIs")
 public class JournalEntryController {
 
     @Autowired

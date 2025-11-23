@@ -1,5 +1,6 @@
 package com.espire.journalApp.service;
 
+import com.espire.journalApp.dto.UserDTO;
 import com.espire.journalApp.entity.User;
 import com.espire.journalApp.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;

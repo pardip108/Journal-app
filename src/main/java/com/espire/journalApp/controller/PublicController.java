@@ -1,8 +1,10 @@
 package com.espire.journalApp.controller;
 
+import com.espire.journalApp.dto.UserDTO;
 import com.espire.journalApp.entity.User;
 import com.espire.journalApp.service.UserService;
 import com.espire.journalApp.utils.JwtUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/public")
+@Tag(name = "Public APIs")
 public class PublicController {
 
     @Autowired
@@ -37,11 +40,17 @@ public class PublicController {
     }
 
     @PostMapping("/signup")
-    public void signup(@RequestBody User user){
-        userService.saveNewUser(user);
+    public void signup(@RequestBody UserDTO user){
+        User newUser = new User();
+        newUser.setEmail(user.getEmail());
+        newUser.setPassword(user.getPassword());
+        newUser.setUsername(user.getUsername());
+        newUser.setSentimentAnalysis(user.isSentimentAnalysis());
+        userService.saveNewUser(newUser);
     }
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user){
+    public ResponseEntity<?> login(@RequestBody UserDTO user){
         try{
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
