@@ -4,6 +4,7 @@ import com.espire.journalApp.entity.JournalEntry;
 import com.espire.journalApp.entity.User;
 import com.espire.journalApp.service.JournalEntryService;
 import com.espire.journalApp.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.bson.types.ObjectId;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,7 @@ public class JournalEntryController {
     private static final Logger logger = LoggerFactory.getLogger(JournalEntryController.class);
 
     @GetMapping
+    @Operation(summary = "get all journal entreis")
     public ResponseEntity<?> getAllJournalEntriesOfUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
